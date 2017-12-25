@@ -1,0 +1,192 @@
+body {
+  background: #090009;
+  /*隐藏滚动条*/
+  overflow: hidden;
+  /*取消移动端长按选择效果*/
+  -webkit-touch-callout: none !important;
+}
+
+#wrapper {
+  position: absolute;
+  /*将背景铺满屏幕全部*/
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /*禁止文字选择*/
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#gamecontainer {
+  /*先定义一个固定的尺寸*/
+  width: 800px;
+  height: 600px;
+  /*用一张大尺寸的背景图片，将其居中现实*/
+  background: url(../images/screen/splashscreen.png) no-repeat center center;
+
+  /*屏幕居中*/
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+}
+
+.gamelayer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: none;
+}
+
+/*菜单画面*/
+.game-title {
+  position: absolute;
+
+  top: 10%;
+  right: 5%;
+  text-align: center;
+
+  font-family: 'Microsoft YaHei', 'Courier New', Courier, monospace;
+  font-size: 90px;
+
+  color: #fff;
+  text-shadow: -2px 0 purple, 0 2px purple, 2px 0 purple, 0 -2px purple;
+}
+.game-option {
+  position: relative;
+  top: 60%;
+  left: 10%;
+  display: block;
+  font-size: 48px;
+  color: #fff;
+  cursor: pointer;
+}
+.game-option:hover {
+  color: yellow;
+}
+/*加载画面*/
+#loadingscreen {
+  background: rgba(100, 100, 100, 0.7);
+}
+#loadingmessage {
+  position: relative;
+  top: 400px;
+  text-align: center;
+
+  height: 48px;
+  color: #fff;
+  background: url(../images/loader.gif) no-repeat center center;
+  font-size: 12px;
+}
+
+/*关卡介绍画面*/
+#missionbriefingscreen {
+  background: url(../images/screen/interface-middle.png);
+}
+#missionbriefingscreen input[type='button'] {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  background-image: url(../images/buttons.png);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.left-panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.right-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#entermission {
+  height: 52px;
+  width: 193px;
+  position: absolute;
+  top: 83px;
+  left: 3px;
+  background-position: -1px -1px;
+}
+#entermission:disabled,
+#entermission:active {
+  background-position: -192px -2px;
+}
+#exitmission {
+  height: 52px;
+  width: 73px;
+  position: absolute;
+  top: 82px;
+  right: 168px;
+  background-position: -4px -61px;
+}
+#exitmission:disabled,
+#exitmission:active {
+  background-position: -83px -62px;
+}
+#missionbriefing {
+  position: absolute;
+  top: 170px;
+  left: 40px;
+  right: 220px;
+  height: 270px;
+  color: rgb(130, 150, 162);
+  text-shadow: -1px 1px #000;
+  font-size: 16px;
+}
+
+/*游戏主画面*/
+#gameinterfacescreen {
+  background: url('../images/screen/interface-middle.png');
+}
+#gameinterfacescreen #gamemessages {
+  position: absolute;
+  padding: 5px;
+
+  top: 4px;
+  left: 5px;
+  right: 168px;
+  height: 60px;
+
+  color: rgb(130, 150, 162);
+  overflow: hidden;
+  font-size: 13px;
+}
+#gamemessage span {
+  color: #fff;
+}
+#callerpicture {
+  position: absolute;
+
+  right: 20px;
+  top: 156px;
+  width: 114px;
+  height: 70px;
+
+  overflow: hidden;
+}
+#cash {
+  position: absolute;
+
+  right: 20px;
+  top: 240px;
+  width: 120px;
+  height: 18px;
+
+  color: rgb(130, 150, 162);
+  overflow: hidden;
+  font-size: 14px;
+  text-align: right;
+}
+#gameinterfacescreen canvas {
+  position: absolute;
+  top: 79px;
+  left: 0;
+}

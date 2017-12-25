@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1,minimum-scale=1, width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>末日殖民</title>
+  <script src="js/common.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/mouse.js"></script>
+  <script src="js/singleplayer.js"></script>
+  <script src="js/levels.js"></script>
+  <!-- 游戏内的各个物体 -->
+  <script src="js/buildings.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="wrapper">
+    <div id="gamecontainer">
+      <!-- 开始菜单画面 -->
+      <div id="gamestartscreen" class="gamelayer">
+        <span class="game-title">末日殖民</span>
+        <span class="game-option" onclick="singleplayer.start()">单人战役</span>
+        <span class="game-option" onclick="multiplayer.start()">多人联机</span>
+      </div>
+      <!-- 任务简介画面 -->
+      <div id="missionbriefingscreen" class="gamelayer">
+        <img src="images/screen/interface-left.png" class="left-panel" draggable="false">
+        <img src="images/screen/interface-right-briefing.png" class="right-panel" draggable="false">
+        <input type="button" id="entermission" onclick="singleplayer.play();">
+        <input type="button" id="exitmission" onclick="singleplayer.exit();">
+        <div id="missionbriefing"></div>
+      </div>
+      <!-- 游戏画面 -->
+      <div id="gameinterfacescreen" class="gamelayer">
+        <img src="images/screen/interface-left.png" class="left-panel" draggable="false">
+        <img src="images/screen/interface-right-game.png" class="right-panel" draggable="false">
+        <div id="gamemessages"></div>
+        <div id="callerpicture"></div>
+        <div id="cash"></div>
+        <div id="sidebarbuttons"></div>
+        <canvas id="gamebackgroundcanvas"></canvas>
+        <canvas id="gameforegroundcanvas"></canvas>
+      </div>
+      <!-- 资源加载画面 -->
+      <div id="loadingscreen" class="gamelayer">
+        <div id="loadingmessage"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
