@@ -8,23 +8,23 @@ const game = {
     this.initCanvas();
     // 显示菜单画面
     this.hideScreens();
-    this.showScreen('gamestartscreen');
+    this.showScreen("gamestartscreen");
     // this.showScreen('gameinterfacescreen');
   },
   hideScreens() {
-    const screens = document.querySelectorAll('.gamelayer');
+    const screens = document.querySelectorAll(".gamelayer");
     for (let i = screens.length - 1; i >= 0; i--) {
       let screen = screens[i];
-      screen.style.display = 'none';
+      screen.style.display = "none";
     }
   },
   hideScreen(id) {
     const screen = document.getElementById(id);
-    screen.style.display = 'none';
+    screen.style.display = "none";
   },
   showScreen(id) {
     const screen = document.getElementById(id);
-    screen.style.display = 'block';
+    screen.style.display = "block";
   },
   scale: 1,
   resize() {
@@ -33,7 +33,7 @@ const game = {
 
     const scale = Math.min(maxWidth / 800, maxHeight / 600);
 
-    const gamecontainer = document.getElementById('gamecontainer');
+    const gamecontainer = document.getElementById("gamecontainer");
 
     gamecontainer.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
@@ -44,7 +44,7 @@ const game = {
 
     const width = Math.max(800, Math.min(1024, maxWidth / scale));
 
-    gamecontainer.style.width = width + 'px';
+    gamecontainer.style.width = width + "px";
 
     const canvasWidth = width - 160;
     if (this.canvasWidth !== canvasWidth) {
@@ -67,10 +67,10 @@ const game = {
       const requirementArray = level.requirements[type];
 
       requirementArray.forEach(name => {
-        if (window[type] && typeof window[type].load === 'function') {
+        if (window[type] && typeof window[type].load === "function") {
           window[type].load(name);
         } else {
-          console.log('无法加载的类型：' + type);
+          console.log("无法加载的类型：" + type);
         }
       });
     }
@@ -79,7 +79,7 @@ const game = {
   resetArrays() {
     this.couter = 0;
 
-    this.items = 0;
+    this.items = [];
     this.buildings = [];
     this.vehicles = [];
     this.aircraft = [];
@@ -98,15 +98,29 @@ const game = {
 
     return item;
   },
+  // 从各个相关数组中删除数据
+  remove(item) {
+    item.selected = false;
+    for (let i = this.selectedItems.length - 1; i >= 0; i--) {
+      if (this.selectedItems[i].uid === item.uid) {
+        this.selectedItems.splice(i, 1);
+        break;
+      }
+    }
+    // 从items数组中剔除item
+    this.items = this.items.filter(p => p.uid !== item.uid);
+
+    this[item.type] = this[item.type].filter(p => p.uid !== item.uid);
+  },
   // 设置canvas参数
   canvasWidth: 480,
   canvasHeight: 400,
   initCanvas() {
-    this.backgroundCanvas = document.getElementById('gamebackgroundcanvas');
-    this.backgroundContext = this.backgroundCanvas.getContext('2d');
+    this.backgroundCanvas = document.getElementById("gamebackgroundcanvas");
+    this.backgroundContext = this.backgroundCanvas.getContext("2d");
 
-    this.foregroundCanvas = document.getElementById('gameforegroundcanvas');
-    this.foregroundContext = this.foregroundCanvas.getContext('2d');
+    this.foregroundCanvas = document.getElementById("gameforegroundcanvas");
+    this.foregroundContext = this.foregroundCanvas.getContext("2d");
 
     this.backgroundCanvas.width = this.canvasWidth;
     this.foregroundCanvas.width = this.canvasWidth;
@@ -117,7 +131,7 @@ const game = {
   // 游戏开始方法
   start() {
     this.hideScreens();
-    this.showScreen('gameinterfacescreen');
+    this.showScreen("gameinterfacescreen");
 
     this.running = true;
     this.refreshBackground = true;
@@ -226,7 +240,7 @@ const game = {
 
 // 绑定初始化画面onload和onresize事件
 window.addEventListener(
-  'load',
+  "load",
   () => {
     game.resize();
     game.init();
@@ -234,4 +248,4 @@ window.addEventListener(
   false
 );
 
-window.addEventListener('resize', () => game.resize());
+window.addEventListener("resize", () => game.resize());

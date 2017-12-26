@@ -7,43 +7,43 @@ const loader = {
   init() {
     // 浏览器音频检测，是否支持mp3或ogg
     let mp3Support, oggSupport;
-    const audio = document.createElement('audio');
+    const audio = document.createElement("audio");
     if (audio.canPlayType) {
       // 不返回空值就表示浏览器支持
-      mp3Support = '' !== audio.canPlayType('audio/mpeg');
-      oggSupport = '' !== audio.canPlayType('audio/ogg');
+      mp3Support = "" !== audio.canPlayType("audio/mpeg");
+      oggSupport = "" !== audio.canPlayType("audio/ogg");
     } else {
       // 浏览器不支持audio标签
       mp3Support = false;
       oggSupport = false;
     }
-    this.soundFileExtn = oggSupport ? '.ogg' : mp3Support ? '.mp3' : undefined;
+    this.soundFileExtn = oggSupport ? ".ogg" : mp3Support ? ".mp3" : undefined;
   },
 
   loadImage(url) {
     this.loaded = false;
     this.totalCount = this.totalCount + 1;
 
-    game.showScreen('loadingscreen');
+    game.showScreen("loadingscreen");
 
     const image = new Image();
 
-    image.addEventListener('load', e => this.itemLoaded(e), false);
+    image.addEventListener("load", e => this.itemLoaded(e), false);
     image.src = url;
 
     return image;
   },
 
-  soundFileExtn: '.ogg',
+  soundFileExtn: ".ogg",
   loadSound(url) {
     this.loaded = false;
     this.totalCount = this.totalCount + 1;
 
-    game.showScreen('loadingscreen');
+    game.showScreen("loadingscreen");
 
     const audio = new Audio();
 
-    audio.addEventListener('canplaythrough', e => this.itemLoaded(e), false);
+    audio.addEventListener("canplaythrough", e => this.itemLoaded(e), false);
     audio.src = url + this.soundFileExtn;
 
     return audio;
@@ -53,7 +53,7 @@ const loader = {
     // 移除事件绑定
     e.target.removeEventListener(e.type, this.itemLoaded, false);
     this.loadedCount = this.loadedCount + 1;
-    document.getElementById('loadingmessage').innerHTML = `正在加载资源（${this
+    document.getElementById("loadingmessage").innerHTML = `正在加载资源（${this
       .loadedCount}/${this.totalCount}）`;
 
     // 资源加载完毕
@@ -63,7 +63,7 @@ const loader = {
       this.loadedCount = 0;
       this.totalCount = 0;
       // 隐藏加载画面
-      game.hideScreen('loadingscreen');
+      game.hideScreen("loadingscreen");
 
       // 如果存在回调，调用回调
       if (this.onload) {
@@ -134,6 +134,29 @@ const baseItem = {
   direction: 0,
   selected: false,
   selectable: true,
-  orders: { type: 'stand' },
-  action: 'stand'
+  orders: { type: "stand" },
+  action: "stand",
+  // 默认的动画渲染方法
+  animate() {
+    if (this.life > this.hitPoints * 0.4) {
+      // 血量大于40%，保持正常态
+      this.lifeCode = "healthy";
+    } else if (this.life > 0) {
+      // 0~40%，为受损态
+      this.lifeCode = "damage";
+    } else {
+      this.lifeCode = "dead";
+      game.remove(this);
+      return;
+    }
+    // 处理指令过程
+    this.processActions();
+  },
+  // 绘制物体方法
+  draw() {
+    // 绘制坐标
+    this.drawingX = this.x * game.gridSize - game.offsetX - this.pixelOffsetX;
+    this.drawingY = this.y * game.gridSize - game.offsetY - this.pixelOffsetY;
+    this.drawSprite();
+  }
 };
