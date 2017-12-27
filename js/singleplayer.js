@@ -10,10 +10,10 @@ const singleplayer = {
   },
   currentLevel: 0,
   initLevel() {
-    game.type = 'singleplayer';
-    game.team = 'blue';
+    game.type = "singleplayer";
+    game.team = "blue";
     // 先将开始战斗按钮置灰，等资源加载完后再将按钮恢复
-    const enterMissionButton = document.getElementById('entermission');
+    const enterMissionButton = document.getElementById("entermission");
     enterMissionButton.disabled = true;
     // 加载当前关卡的资源（地图信息等）
     const level = levels.singleplayer[this.currentLevel];
@@ -27,20 +27,21 @@ const singleplayer = {
     this.showMissionBriefing(level.briefing);
   },
   showMissionBriefing(briefing) {
-    const missionBriefingText = document.getElementById('missionbriefing');
+    const missionBriefingText = document.getElementById("missionbriefing");
     // 把代表换行的\n替换成<br>
-    missionBriefingText.innerHTML = briefing.replace(/\n/, '<br>');
+    missionBriefingText.innerHTML = briefing.replace(/\n/, "<br>");
     // 现实关卡简介
-    game.showScreen('missionbriefingscreen');
+    game.showScreen("missionbriefingscreen");
   },
   exit() {
     game.hideScreens();
-    game.showScreen('gamestartscreen');
+    game.showScreen("gamestartscreen");
   },
   play() {
+    // 异步渲染物体的动画
     game.animationLoop();
     game.animationInterval = setInterval(
-      game.animationLoop,
+      game.animationLoop.bind(game),
       game.animationTimeout
     );
     game.start();

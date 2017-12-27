@@ -1,4 +1,5 @@
-const buildings = {
+// 这里使用var声明，将buildings变成顶层对象，便于全局访问
+var buildings = {
   // 所有建筑单位都放在list数组里
   list: {
     // 基地
@@ -82,6 +83,10 @@ const buildings = {
       );
     }
   },
-  load: loadItem,
-  add: addItem
+  load(name) {
+    return loader.loadItem.call(this, name);
+  },
+  add(item) {
+    return loader.addItem.call(this, item);
+  }
 };

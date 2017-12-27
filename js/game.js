@@ -62,11 +62,13 @@ const game = {
       `images/maps/${maps[level.mapName].mapImage}`
     );
     this.resetArrays();
-    // 加载关卡定义的全部资源
+    // 加载关卡定义的全部资源，level.requirements为当前关卡涉及到的所有物体
     for (let type in level.requirements) {
+      // 获取其中一种物体种类(type -> buildings/vehicles/aricraft/terrain)下的物体
       const requirementArray = level.requirements[type];
 
       requirementArray.forEach(name => {
+        // 如果已经定义了此大类（buildings/vehicles/aricraft/terrain），则加载此大类下的load方法
         if (window[type] && typeof window[type].load === "function") {
           window[type].load(name);
         } else {
@@ -77,7 +79,7 @@ const game = {
     level.items.forEach(itemDetails => this.add(itemDetails));
   },
   resetArrays() {
-    this.couter = 0;
+    this.counter = 0;
 
     this.items = [];
     this.buildings = [];
@@ -145,7 +147,9 @@ const game = {
     this.handlePanning();
     // 绘制背景
     this.drawBackground();
-
+    // 清除前景图
+    this.foregroundContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.sortedItems.forEach(item => item.draw());
     // 游戏在进行中，则重复绘制
     requestAnimationFrame(() => this.drawingLoop());
   },
@@ -186,7 +190,12 @@ const game = {
   offsetY: 0,
   // 动画持续时间
   animationTimeout: 100,
-  animationLoop() {},
+  animationLoop() {
+    this.items.forEach(item => item.animate());
+    this.sortedItems = Object.assign([], this.items);
+    // 按照y的坐标来排序，越小越先画，达到覆盖层叠的效果，如果y值一样，则x越大越先画
+    this.sortedItems.sort((a, b) => a.y - b.y + (a.y === b.y ? b.x - a.x : 0));
+  },
 
   // 平移地图相关属性和方法
 

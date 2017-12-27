@@ -84,7 +84,7 @@ const loader = {
     );
     item.spriteArray = {};
     item.spriteCount = 0;
-
+    // 每种雪碧图状态下的信息
     item.spriteImages.forEach(spriteImage => {
       const {
         count: constructImageCount,
@@ -99,7 +99,7 @@ const loader = {
           item.spriteArray[constructImageName] = {
             name: constructImageName,
             count: constructImageCount,
-            offset: items.spriteCount
+            offset: item.spriteCount
           };
           item.spriteCount += constructImageCount;
         }
@@ -109,7 +109,7 @@ const loader = {
         item.spriteArray[constructImageName] = {
           name: constructImageName,
           count: constructImageCount,
-          offset: items.spriteCount
+          offset: item.spriteCount
         };
 
         item.spriteCount += constructImageCount;
@@ -119,13 +119,17 @@ const loader = {
 
   // 将属性添加到游戏单位
   addItem(details) {
-    const defaults = this.defaults;
+    // const defaults = this.defaults;
     const name = details.name;
-    const entity = this.list[name];
-    const item = { ...baseItem, ...defaults, ...entity };
+    // const entity = this.list[name];
+    const item = Object.assign({}, baseItem);
+    Object.assign(item, this.defaults);
+    Object.assign(item, this.list[name]);
+    // const item = { ...baseItem, ...defaults, ...entity };
     item.life = item.hitPoints;
-
-    return { ...item, ...details };
+    Object.assign(item, details);
+    return item;
+    // return { ...item, ...details };
   }
 };
 
@@ -143,7 +147,7 @@ const baseItem = {
       this.lifeCode = "healthy";
     } else if (this.life > 0) {
       // 0~40%，为受损态
-      this.lifeCode = "damage";
+      this.lifeCode = "damaged";
     } else {
       this.lifeCode = "dead";
       game.remove(this);
@@ -160,3 +164,29 @@ const baseItem = {
     this.drawSprite();
   }
 };
+
+// Polyfill for a few browsers that still do not support Object.assign
+if (typeof Object.assign !== "function") {
+  // .length of function is 2
+  Object.assign = function(target, varArgs) {
+    "use strict";
+    // TypeError if undefined or null
+    if (target === null) {
+      throw new TypeError("Cannot convert undefined or null to object");
+    }
+    var to = Object(target);
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
+      // Skip over if undefined or null
+      if (nextSource != null) {
+        // Avoid bugs when hasOwnProperty is shadowed
+        for (var nextKey in nextSource) {
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}

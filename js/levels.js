@@ -1,7 +1,7 @@
 // 地图设置
 const maps = {
   plains: {
-    mapImage: 'plains-debug.png',
+    mapImage: "plains-debug.png",
     // 地形数据
     mapGridWidth: 60,
     mapGridHeight: 40,
@@ -562,30 +562,30 @@ const maps = {
 const levels = {
   singleplayer: [
     {
-      name: '新手入门',
-      briefing: '在这一关卡，你将学习如何平移地图。\n\n请稍等片刻，更多精彩关卡将在不久后推出，敬请期待！',
+      name: "新手入门",
+      briefing: "在这一关卡，你将学习如何平移地图。\n\n请稍等片刻，更多精彩关卡将在不久后推出，敬请期待！",
       // 地图详情
-      mapName: 'plains',
+      mapName: "plains",
       // 地图初始位置（单位格子）
       startX: 4,
       startY: 4,
-      // 需要加载的物体
+      // 当前关卡需要加载的全部物体，分成4类：buildings/vehicles/aricraft/terrain
       requirements: {
-        buildings: ['base'],
+        buildings: ["base"],
         vehicles: [],
         aircraft: [],
         terrain: []
       },
-      // 需要添加的物体
+      // 需要添加的具体物体
       items: [
-        { type: 'buildings', name: 'base', x: 11, y: 14, team: 'blue' },
-        { type: 'buildings', name: 'base', x: 12, y: 16, team: 'green' },
+        { type: "buildings", name: "base", x: 11, y: 14, team: "blue" },
+        { type: "buildings", name: "base", x: 12, y: 16, team: "green" },
         {
-          type: 'buildings',
-          name: 'base',
+          type: "buildings",
+          name: "base",
           x: 15,
           y: 15,
-          team: 'green',
+          team: "green",
           life: 50
         }
       ]
