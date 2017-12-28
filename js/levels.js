@@ -1,7 +1,7 @@
 // 地图设置
 const maps = {
   plains: {
-    mapImage: 'plains-debug.png',
+    mapImage: "plains-debug.png",
     // 地形数据
     mapGridWidth: 60,
     mapGridHeight: 40,
@@ -562,82 +562,174 @@ const maps = {
 const levels = {
   singleplayer: [
     {
-      name: '新手入门',
-      briefing: '在这一关卡，你将学习如何平移地图。\n\n请稍等片刻，更多精彩关卡将在不久后推出，敬请期待！',
+      name: "新手入门",
+      briefing: "在这一关卡，你将学习如何平移地图。\n\n请稍等片刻，更多精彩关卡将在不久后推出，敬请期待！",
       // 地图详情
-      mapName: 'plains',
+      mapName: "plains",
       // 地图初始位置（单位格子）
       startX: 4,
       startY: 4,
       // 当前关卡需要加载的全部物体，分成4类：buildings/vehicles/aricraft/terrain
       requirements: {
-        buildings: ['base', 'starport', 'harvester', 'ground-turret'],
-        vehicles: [],
-        aircraft: [],
-        terrain: []
+        buildings: ["base", "starport", "harvester", "ground-turret"],
+        vehicles: ["transport", "harvester", "scout-tank", "heavy-tank"],
+        aircraft: ["chopper", "wraith"],
+        terrain: ["oilfield", "bigrocks", "smallrocks"]
       },
       // 需要添加的具体物体
       items: [
-        { type: 'buildings', name: 'base', x: 11, y: 14, team: 'blue' },
-        { type: 'buildings', name: 'base', x: 12, y: 16, team: 'green' },
+        // buildings -> base
+        { type: "buildings", name: "base", x: 11, y: 14, team: "blue" },
+        { type: "buildings", name: "base", x: 12, y: 16, team: "green" },
         {
-          type: 'buildings',
-          name: 'base',
+          type: "buildings",
+          name: "base",
           x: 15,
           y: 15,
-          team: 'green',
+          team: "green",
           life: 50
         },
-        { type: 'buildings', name: 'starport', x: 18, y: 14, team: 'blue' },
+        // buildings -> starport
+        { type: "buildings", name: "starport", x: 18, y: 14, team: "blue" },
         {
-          type: 'buildings',
-          name: 'starport',
+          type: "buildings",
+          name: "starport",
           x: 20,
           y: 10,
-          team: 'blue',
-          action: 'teleport'
+          team: "blue",
+          action: "teleport"
         },
         {
-          type: 'buildings',
-          name: 'starport',
+          type: "buildings",
+          name: "starport",
           x: 22,
           y: 16,
-          team: 'green',
-          action: 'open'
+          team: "green",
+          action: "open"
         },
-        { type: 'buildings', name: 'harvester', x: 24, y: 10, team: 'blue' },
+        // buildings -> harvester
+        { type: "buildings", name: "harvester", x: 24, y: 6, team: "blue" },
         {
-          type: 'buildings',
-          name: 'harvester',
+          type: "buildings",
+          name: "harvester",
           x: 26,
-          y: 12,
-          team: 'green',
-          action: 'deploy'
+          y: 8,
+          team: "green",
+          action: "deploy"
         },
+        // buildings -> ground-turret
         {
-          type: 'buildings',
-          name: 'ground-turret',
+          type: "buildings",
+          name: "ground-turret",
           x: 14,
           y: 10,
-          team: 'blue',
+          team: "blue",
           direction: 3
         },
         {
-          type: 'buildings',
-          name: 'ground-turret',
+          type: "buildings",
+          name: "ground-turret",
           x: 14,
           y: 13,
-          team: 'green',
+          team: "green",
           direction: 31
         },
         {
-          type: 'buildings',
-          name: 'ground-turret',
+          type: "buildings",
+          name: "ground-turret",
           x: 16,
           y: 12,
-          team: 'blue',
-          action: 'teleport'
-        }
+          team: "blue",
+          action: "teleport"
+        },
+        // vehicles -> transport/harvester/scout-tank/heavy-tank
+        {
+          type: "vehicles",
+          name: "transport",
+          x: 26,
+          y: 10,
+          team: "blue",
+          direction: 2
+        },
+        {
+          type: "vehicles",
+          name: "harvester",
+          x: 26,
+          y: 12,
+          team: "blue",
+          direction: 3
+        },
+        {
+          type: "vehicles",
+          name: "scout-tank",
+          x: 26,
+          y: 14,
+          team: "blue",
+          direction: 4
+        },
+        {
+          type: "vehicles",
+          name: "heavy-tank",
+          x: 26,
+          y: 16,
+          team: "blue",
+          direction: 5
+        },
+
+        {
+          type: "vehicles",
+          name: "transport",
+          x: 28,
+          y: 10,
+          team: "green",
+          direction: 7
+        },
+        {
+          type: "vehicles",
+          name: "harvester",
+          x: 28,
+          y: 12,
+          team: "green",
+          direction: 6
+        },
+        {
+          type: "vehicles",
+          name: "scout-tank",
+          x: 28,
+          y: 14,
+          team: "green",
+          direction: 1
+        },
+        {
+          type: "vehicles",
+          name: "heavy-tank",
+          x: 28,
+          y: 16,
+          team: "green",
+          direction: 0
+        },
+        // aircraft -> chopper/wraith
+        {
+          type: "aircraft",
+          name: "chopper",
+          x: 20,
+          y: 22,
+          team: "blue",
+          direction: 2
+        },
+        {
+          type: "aircraft",
+          name: "wraith",
+          x: 23,
+          y: 22,
+          team: "green",
+          direction: 3
+        },
+        // terrain -> oilfield/bigrocks/smallrocks
+        { type: "terrain", name: "oilfield", x: 5, y: 7 },
+        { type: "terrain", name: "oilfield", x: 8, y: 7, action: "hint" },
+        { type: "terrain", name: "bigrocks", x: 5, y: 3 },
+        { type: "terrain", name: "smallrocks", x: 8, y: 3 }
       ]
     }
   ],

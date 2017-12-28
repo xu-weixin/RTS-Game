@@ -5,7 +5,7 @@ var buildings = {
     // 基地
     // 基地游戏开始便存在，花费相关资源可以建造，基地之间可以传送其他单位
     base: {
-      name: 'base',
+      name: "base",
       // 下面是绘制基地的一些属性
 
       // 雪碧图上基地的大小
@@ -27,15 +27,15 @@ var buildings = {
       hitPoints: 500,
       // 造价
       cost: 5000,
-      // 雪碧图上对应各个状态的动画帧数
+      // 雪碧图上从左往右对应各个状态的动画帧数
       spriteImages: [
-        { name: 'healthy', count: 4 },
-        { name: 'damaged', count: 1 },
-        { name: 'constructing', count: 3 }
+        { name: "healthy", count: 4 },
+        { name: "damaged", count: 1 },
+        { name: "constructing", count: 3 }
       ]
     },
     starport: {
-      name: 'starport',
+      name: "starport",
       pixelWidth: 40,
       pixelHeight: 60,
       baseWidth: 40,
@@ -49,14 +49,14 @@ var buildings = {
       canConstruct: true,
       hitPoints: 300,
       spriteImages: [
-        { name: 'teleport', count: 9 },
-        { name: 'closing', count: 18 },
-        { name: 'healthy', count: 4 },
-        { name: 'damaged', count: 1 }
+        { name: "teleport", count: 9 },
+        { name: "closing", count: 18 },
+        { name: "healthy", count: 4 },
+        { name: "damaged", count: 1 }
       ]
     },
     harvester: {
-      name: 'harvester',
+      name: "harvester",
       pixelWidth: 40,
       pixelHeight: 60,
       baseWidth: 40,
@@ -69,21 +69,21 @@ var buildings = {
       cost: 5000,
       hitPoints: 300,
       spriteImages: [
-        { name: 'deploy', count: 17 },
-        { name: 'healthy', count: 3 },
-        { name: 'damaged', count: 1 }
+        { name: "deploy", count: 17 },
+        { name: "healthy", count: 3 },
+        { name: "damaged", count: 1 }
       ]
     },
-    'ground-turret': {
-      name: 'ground-turret',
+    "ground-turret": {
+      name: "ground-turret",
       canAttack: true,
       canAttackLand: true,
       canAttackAir: false,
-      weaponType: 'cannon-ball',
-      action: 'stand',
+      weaponType: "cannon-ball",
+      action: "stand",
       direction: 0, // 初始炮口方向向上
       directions: 8, // 总共8个方向
-      orders: { type: 'guard' },
+      orders: { type: "guard" },
       pixelWidth: 38,
       pixelHeight: 32,
       baseWidth: 20,
@@ -97,19 +97,20 @@ var buildings = {
       sight: 5,
       hitPoints: 200,
       spriteImages: [
-        { name: 'teleport', count: 9 },
-        { name: 'healthy', count: 1, directions: 8 },
-        { name: 'damaged', count: 1 }
+        { name: "teleport", count: 9 }, // 1-9帧是teleport状态
+        { name: "healthy", count: 1, directions: 8 }, // 接下来healthy状态只有1帧，但是有8个方向，所以总共有8帧
+        { name: "damaged", count: 1 } // damaged状态只有1帧
       ]
     }
   },
   // default中放置所有建筑单位的默认设置，可在具体单位设置中覆盖这些属性或方法
   defaults: {
-    type: 'buildings',
+    type: "buildings",
+    // 定义每种指令（action）的动画操作过程
     processActions() {
       switch (this.action) {
-        case 'stand':
-          if (this.name === 'ground-turret' && this.lifeCode === 'healthy') {
+        case "stand":
+          if (this.name === "ground-turret" && this.lifeCode === "healthy") {
             const direction = Math.round(this.direction) % this.directions;
             this.imageList = this.spriteArray[`${this.lifeCode}-${direction}`];
           } else {
@@ -122,38 +123,38 @@ var buildings = {
             this.animationIndex = 0;
           }
           break;
-        case 'construct':
-          this.imageList = this.spriteArray['constructing'];
+        case "construct":
+          this.imageList = this.spriteArray["constructing"];
           this.imageOffset = this.imageList.offset + this.animationIndex;
           this.animationIndex++;
           // 建造结束，变回静止态
           if (this.animationIndex >= this.imageList.count) {
             this.animationIndex = 0;
-            this.action = 'stand';
+            this.action = "stand";
           }
           break;
-        case 'teleport':
-          this.imageList = this.spriteArray['teleport'];
+        case "teleport":
+          this.imageList = this.spriteArray["teleport"];
           this.imageOffset = this.imageList.offset + this.animationIndex;
           this.animationIndex++;
           // 传送动画结束，回到静止
           if (this.animationIndex >= this.imageList.count) {
             this.animationIndex = 0;
-            this.action = 'stand';
+            this.action = "stand";
           }
           break;
-        case 'close':
-          this.imageList = this.spriteArray['closing'];
+        case "close":
+          this.imageList = this.spriteArray["closing"];
           this.imageOffset = this.imageList.offset + this.animationIndex;
           this.animationIndex++;
           // 关闭动画结束，回到静止
           if (this.animationIndex >= this.imageList.count) {
             this.animationIndex = 0;
-            this.action = 'stand';
+            this.action = "stand";
           }
           break;
-        case 'open':
-          this.imageList = this.spriteArray['closing'];
+        case "open":
+          this.imageList = this.spriteArray["closing"];
           // 开启动画是关闭动画的倒放
           this.imageOffset =
             this.imageList.offset + this.imageList.count - this.animationIndex;
@@ -161,17 +162,17 @@ var buildings = {
           // 开启动画结束，接着开始关闭动画
           if (this.animationIndex >= this.imageList.count) {
             this.animationIndex = 0;
-            this.action = 'close';
+            this.action = "close";
           }
           break;
-        case 'deploy':
-          this.imageList = this.spriteArray['deploy'];
+        case "deploy":
+          this.imageList = this.spriteArray["deploy"];
           this.imageOffset = this.imageList.offset + this.animationIndex;
           this.animationIndex++;
           // 关闭动画结束，回到静止
           if (this.animationIndex >= this.imageList.count) {
             this.animationIndex = 0;
-            this.action = 'stand';
+            this.action = "stand";
           }
           break;
       }
@@ -180,7 +181,7 @@ var buildings = {
       const x = this.drawingX;
       const y = this.drawingY;
       // 雪碧图上第一行是蓝队的图，第二行是绿队的图
-      const colorIndex = this.team === 'blue' ? 0 : 1;
+      const colorIndex = this.team === "blue" ? 0 : 1;
       // 纵向是否偏移
       const colorOffset = colorIndex * this.pixelHeight;
 
